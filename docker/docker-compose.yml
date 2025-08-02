@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+  web:
+    build: ./docker
+    container_name: php_app
+    ports:
+      - "8080:80"
+    volumes:
+      # Mount our application code into the Apache document root
+      - ../public:/var/www/html
+      - ../src/php:/var/www/php
+      - ../src/js:/var/www/html/js
+      - ../src/css:/var/www/html/css
+      - ../src/xslt:/var/www/xslt
+      - ../src/xml:/var/www/xml
+      - ../src/xsd:/var/www/xsd
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_NAME=booksdb
+      - DB_USER=books_user
+      - DB_PASS=books_pass
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: booksdb
+      MYSQL_USER: books_user
+      MYSQL_PASSWORD: books_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ../sql:/docker-entrypoint-initdb.d
+
+volumes:
+  db_data:
