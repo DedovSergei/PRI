@@ -1,4 +1,4 @@
-FROM php:8.2-apache-bullseye-slim
+FROM php:8.2-apache-bookworm
 
 # Install only the dev libs you need, no extra recommends
 RUN apt-get update \

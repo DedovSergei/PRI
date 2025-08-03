@@ -1,8 +1,6 @@
-version: '3.9'
-
 services:
   web:
-    build: ./docker
+    build: .
     container_name: php_app
     ports:
       - "8080:80"
@@ -32,7 +30,7 @@ services:
       MYSQL_USER: books_user
       MYSQL_PASSWORD: books_pass
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
       - ../sql:/docker-entrypoint-initdb.d

@@ -2,7 +2,7 @@
 /**
  * Simple API endpoint that returns all books as JSON.
  */
-require_once __DIR__ . '/../../src/php/db.php';
+require_once __DIR__ . '/../../php/db.php';
 $pdo = Database::getConnection();
 
 header('Content-Type: application/json; charset=utf-8');

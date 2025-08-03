@@ -47,10 +47,12 @@ $dom->save($xmlFile);
 $xsdPath = realpath(__DIR__ . '/../xsd/books.xsd');
 $isValid = $dom->schemaValidate($xsdPath);
 
-header('Content-Type: text/xml; charset=UTF-8');
-if (!$isValid) {
-    // If validation fails, return the XML but also set status code
-    http_response_code(500);
+// If this script is accessed directly, output the XML;
+// when it’s included (e.g. by index.php), only save & validate.
+if (basename($_SERVER['SCRIPT_NAME']) === basename(__FILE__)) {
+    header('Content-Type: text/xml; charset=UTF-8');
+    if (!$isValid) {
+        http_response_code(500);
+    }
+    echo $dom->saveXML();
 }
-echo $dom->saveXML();
-?>
